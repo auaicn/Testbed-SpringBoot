@@ -8,16 +8,21 @@ group = 'japbook'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+// Lombok 때문에 생긴 부분
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
 }
 
+// library 를 어디에서 다운받을 것인지
 repositories {
 	mavenCentral()
 }
 
+// lombok 소스코드는 Compile 시에만 작용하는 애라서 compileOnly
+// h2 는 이미 빌드된 바이너리로, compile 단계를 거치지 않고, runtime 에만 작동한다.
+// testImplementation 은 테스트를 위한 용도로 언제나 있는 부분
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
