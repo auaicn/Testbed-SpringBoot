@@ -4,33 +4,43 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class JpaMain {
+
     public static void main(String[] args) {
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
-        EntityManager em =  emf.createEntityManager();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("relation");
+        EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
         tx.begin();
         try {
-            Member member1 = new Member();
-            member1.setName("kyung ho Park");
-            em.persist(member1);
+            Team team = new Team();
+            team.setName("week4");
+            em.persist(team);
 
-            Member member2 = new Member();
-            member2.setName("eun jin");
-            em.persist(member2);
+            Member member = new Member();
+            member.setName("eun jin");
+            member.setTeam(team);
+            em.persist(member);
 
-            Member member3 = new Member();
-            member3.setName("sung joon");
-            em.persist(member3);
+            em.flush();
+            em.clear();
+
+            System.out.println("team.getId() :" + team.getId());
+
+            Member findMember = em.find(Member.class, member.getId());
+            Team findTeam = findMember.getTeam();
+            System.out.println("findTeam :" + findTeam.getName());
 
             tx.commit();
-        }catch (Exception e){
+        } catch (Exception e) {
+            System.out.println("rollback");
+
             tx.rollback();
-        }finally {
+        } finally {
+            System.out.println("closing");
+
             em.close();
         }
 

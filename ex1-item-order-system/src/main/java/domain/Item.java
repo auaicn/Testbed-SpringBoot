@@ -1,26 +1,23 @@
-package pack;
+package domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "USER")
-public class Member {
+public class Item {
 
     @Id @GeneratedValue
+    @Column(name = "ITEM_ID")
     private Long id;
 
-    @Column (name = "USER_NAME")
     private String name;
+    private int price;
+    private int stockQuantity;
 
-    @ManyToOne
-    @JoinColumn(name = "TEAM_ID") // 칼럼은 칼럼인데, join 의 대상인 칼럼이라는 뜻.
-    private Team team;
+    public Item() {
+    }
 
     public Long getId() {
         return id;
@@ -38,15 +35,12 @@ public class Member {
         this.name = name;
     }
 
-    public Team getTeam() {
-        return team;
+    public int getStockQuantity() {
+        return stockQuantity;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 
-    public Member(){
-
-    }
 }

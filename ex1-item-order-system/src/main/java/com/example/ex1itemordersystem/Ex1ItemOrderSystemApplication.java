@@ -1,11 +1,13 @@
 package com.example.ex1itemordersystem;
 
+import domain.Member;
+import domain.Order;
+import domain.OrderStatus;
+import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // @SpringBootApplication
 public class Ex1ItemOrderSystemApplication {
@@ -17,10 +19,28 @@ public class Ex1ItemOrderSystemApplication {
 		EntityManager em =  emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
-		// EntityManagerFactory emf = new EntityManagerFactory();
-//		EntityManagerFactory emf = Persistence.createEntityManagerFactory("order");
-//		EntityManager em = emf.createEntityManager();
+		tx.begin();
+
+		try {
+//			Member member = new Member();
+//			member.setCity("Seoul");
+//			member.setName("kyung ho");
+//			member.setZIPCODE("06508");
+//			member.setId(88L);
 //
+//			Order order = new Order();
+//			order.setOrderedDate(new Date());
+//			order.setStatus(OrderStatus.CONFIRMED);
+//
+//			member.setOrder(order);
+			tx.commit();
+		}catch (Exception e){
+			tx.rollback();
+		}finally {
+			em.close();
+		}
+
+		emf.close();
 
 	}
 
